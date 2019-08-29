@@ -1,0 +1,42 @@
+#ligthbluebkg {
+    background-color: cornflowerblue;
+}
+
+#ligthbluetxt {
+    color: cornflowerblue;
+    
+}
+.containerself{
+    
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    display: inline-block;
+}
+.textbox{
+    width: 300px;
+    
+}
+
+.margin{
+    margin-left: 20px;
+    margin-right: 20px;
+    
+}
+
+#rcorners2 {
+    border-radius: 25px;
+    border: 2px solid cornflowerblue;
+    width: 250px;
+    font-weight: bold;
+    height: 150px; 
+    color: cornflowerblue;
+    font-size: 100%;
+    background-color: white;
+  }
+
+#rcorners2:hover {
+    color: white;
+    background-color: cornflowerblue;
+  }

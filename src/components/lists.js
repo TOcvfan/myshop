@@ -1,32 +1,22 @@
 export const HEAR_LIST = [
     {
-        id: 1,
-        option: 'Google search'
+        value: 1,
+        label: 'Google search'
     },
     {
-        id: 2,
-        option: 'From a friend'
+        value: 2,
+        label: 'From a friend'
     },
     {
-        id: 3,
-        option: 'Facebook'
+        value: 3,
+        label: 'Facebook'
     },
     {
-        id: 4,
-        option: 'Instagram'
+        value: 4,
+        label: 'Instagram'
     },
     {
-        id: 5,
-        option: 'Other'
+        value: 5,
+        label: 'Other'
     }
 ];
-/*export const YES_NO = [
-    {
-        id: 1,
-        choice: Yes
-    },
-    {
-        id: 2,
-        choice: No
-    }
-]*/

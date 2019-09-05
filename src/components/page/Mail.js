@@ -1,21 +1,27 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
-import { Textarea, Textbox, Select } from 'react-inputs-validation';
+import { Textarea, Textbox } from 'react-inputs-validation';
+import Select from 'react-select';
 import { HEAR_LIST } from '../lists';
+import { YES_NO } from '../yesno';
+import { Form, Radio } from 'semantic-ui-react'
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 
 class Mail extends React.Component {
     constructor(props){
         super(props);
-        this.handleHearChange = this.handleHearChange.bind(this)
+        this.handleHearChange = this.handleHearChange.bind(this);
+        this.handleYesNoChange = this.handleYesNoChange.bind(this);
         this.state = {
                 id: '',
                 name: '',
-                option: 'volvo',
+                label: '',
+                choice: '',
                 email: '',
                 description: '',
                 size: this.props.size,
                 HEAR_LIST,
+                YES_NO
                 
             }
             this.submitted = false;
@@ -48,12 +54,16 @@ class Mail extends React.Component {
         this.props.onSubmit(formValues);
     }
 
-    handleHearChange(event){
-        console.log(event);
+    handleHearChange(value){
+        console.log(value.label);
         this.setState({
-            id: event.target.value,
+            selectedValue: value.label
         });
         
+    }
+    handleYesNoChange(choise){
+        console.log(choise.choice);
+        this.setState({selectedanswer: choise.id});
     }
     
     render(){
@@ -70,83 +80,56 @@ class Mail extends React.Component {
 							<div className="">
 								<label htmlFor="" className="">Name of Contact person</label>
 								<Textbox
-                                    tabIndex="1" //Optional.[String or Number].Default: none.
-                                    id={'Name'} //Optional.[String].Default: "".  Input ID.
-                                    name="Name" //Optional.[String].Default: "". Input name.
-                                    type="text" //Optional.[String].Default: "text". Input type [text, password, number].
-                                    disabled={false} //Optional.[Bool].Default: false.
-                                    maxLength={50} //Optional.[String].Default: "".
-                                    placeholder="Place your name here" //Optional.[String].Default: "".
+                                    tabIndex="1" 
+                                    id={'Name'} 
+                                    name="Name"
+                                    type="text"
+                                    disabled={false}
+                                    maxLength={50}
+                                    placeholder="Place your name here"
                                     validationCallback={res =>
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
                                         this.setState({ name });
                                         console.log(e);
-                                    }} //Required.[Func].Default: () => {}. Will return the value.
-                                    onBlur={(e) => {console.log(e)}} //Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                                    onFocus={(e) => {console.log(e)}} //Optional.[Func].Default: none.
+                                    }}
+                                    onBlur={(e) => {console.log(e)}} 
+                                    onFocus={(e) => {console.log(e)}} 
                                     validationOption={{
-                                        name: 'Name', //Optional.[String].Default: "". To display in the Error message. i.e Please enter your ${name}.
-                                        check: true, //Optional.[Bool].Default: true. To determin if you need to validate.
-                                        required: true, //Optional.[Bool].Default: true. To determin if it is a required field.
-                                        min: 5, //Optional.[Number].Default: 0. Validation of min length when validationOption['type'] is string, min amount when validationOption['type'] is number.
-                                        max: 50, //Optional.[Number].Default: 0. Validation of max length when validationOption['type'] is string, max amount when validationOption['type'] is number.
+                                        name: 'Name', 
+                                        check: true, 
+                                        required: true, 
+                                        min: 5,
+                                        max: 50
                                     }}
                                 />
 							</div>
                             <div>
-                            {/*<Radiobox
-                                tabIndex={2} //Optional.[String or Number].Default: none.
-                                id="job" //Optional.[String].Default: "".  Input ID.
-                                name="job" //Optional.[String].Default: "". Input name.
-                                disabled={false} //Optional.[Bool].Default: false.
-                                //value={job} //Optional.[String].Default: "".
-                                //validate={validate} //Optional.[Bool].Default: false. If you have a submit button and trying to validate all the inputs of your form at once, toggle it to true, then it will validate the field and pass the result via the "validationCallback" you provide.
-                                validationCallback={res =>
-                                    this.setState({ hasJobError: res, validate: false })} //Optional.[Func].Default: none. Return the validation result.
-                                //optionList={JOB_OPTIONS_LIST}
-                                classNameInput="" //Optional.[String].Default: "".
-                                classNameWrapper="" //Optional.[String].Default: "".
-                                classNameContainer="" //Optional.[String].Default: "".
-                                classNameOptionListItem="" //Optional.[String].Default: "".
-                                customStyleInput={{}} //Optional.[Object].Default: {}.
-                                customStyleWrapper={{}} //Optional.[Object].Default: {}.
-                                customStyleContainer={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-start'
-                                }} //Optional.[Object].Default: {}.
-                                customStyleOptionListItem={{ marginRight: '20px' }} //Optional.[Object].Default: {}.
-                                onChange={(job, e) =>{
-                                    this.setState({ job });
-                                    console.log(e);
-                                }} //Required.[Func].Default: () => {}. Will return the value.
-                                onBlur={(e) => {console.log(e)}} //Optional.[Func].Default: none.
-                                // onFocus={(e) => {console.log(e)}} //Optional.[Func].Default: none.
-                                // onClick={(e) => {console.log(e)}} //Optional.[Func].Default: none.
-                                validationOption={{
-                                    name: 'Name', //Optional.[String].Default: "". To display in the Error message. i.e Please enter your ${name}.
-                                    check: true, //Optional.[Bool].Default: true. To determin if you need to validate.
-                                    required: true, //Optional.[Bool].Default: true. To determin if it is a required field.
-                                    // showMsg: true, //Optional.[Bool].Default: true. To determin display the error message or not.
-                                    // locale: 'en-US', //Optional.[String].Default: "en-US". For error message display. Current options are ['zh-CN', 'en-US']; Default is 'en-US'. If your are looking for more options, you can take a look at 'window.REACT_INPUTS_VALIDATION' section, which provides the extensibility for your own locale.
-                                    // msgOnError: "Your custom error message if you provide the validationOption['msgOnError']", //Optional.[String].Default: "". Show your custom error message no matter what when it has error if it is provied.
-                                    // msgOnSuccess: "Your custom success message if you provide the validationOption['msgOnSuccess']. Otherwise, it will not show, not even green border." //Optional.[String].Default: "". Show your custom success message no matter what when it has error if it is provied.
-                                }}
-                                // asyncMsgObj={{
-                                //   error: false, // Optional.[Bool].Default: false. (Server response) Backend validation result.
-                                //   message: '', // Optional.[String].Default: "". (Server response) Your AJAX message. For instance, provide it when backend returns 'USERNAME ALREADY EXIST'
-                                //   showOnError: true, // Optional.[Bool].Default: true. (Server response) Show AJAX error message or not.
-                                //   showOnSuccess: false, // Optional.[Bool].Default: false. (Server response) Show AJAX success message or not.
-                                // }}
-                            />*/}
+                                <div>
+                                    {YES_NO.map((answers, id) => {
+                                        return (
+                                            <Form.Field key={id}>
+                                                <Radio
+                                                    label={YES_NO[id].choice}
+                                                    name='radioGroup'
+                                                    value={YES_NO[id].choice}
+                                                    checked={this.state.value === "yes"}
+                                                    onChange={this.handleYesNoChange}
+                                                    selectedanswer={this.props.choice}
+                                                />
+                                            </Form.Field> 
+                                            );
+                                    })}
+                                        
+                                </div>
                             </div>
                             <div>
                             <label htmlFor="" className="">Where did hear about this page</label>
-                            <select >
-                                <option >Google search</option>
-                                <option >Volvo</option>
-                                <option >Fiat</option>
-                            </select>
+                            <Select 
+                                options={HEAR_LIST} 
+                                selectedValue={this.state.selectedValue} 
+                                onChange={this.handleHearChange} 
+                            />                            
                             </div>
 							<div className="">
 								<label htmlFor="" className="">Email</label>
@@ -204,28 +187,28 @@ class Mail extends React.Component {
                             <div>
                                 <label>Size</label>
                                 <Textbox
-                                    tabIndex="1" //Optional.[String or Number].Default: none.
-                                    id={'Size'} //Optional.[String].Default: "".  Input ID.
-                                    name="Size" //Optional.[String].Default: "". Input name.
-                                    type="text" //Optional.[String].Default: "text". Input type [text, password, number].
+                                    tabIndex="1" 
+                                    id={'Size'}
+                                    name="Size"
+                                    type="text"
                                     readOnly
                                     autoComplete="off"
-                                    value={this.state.size} //Optional.[String].Default: "".
-                                    disabled={true} //Optional.[Bool].Default: false.
+                                    value={this.state.size}
+                                    disabled={true}
                                     validationCallback={res =>
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
                                         this.setState({ name });
                                         console.log(e);
-                                    }} //Required.[Func].Default: () => {}. Will return the value.
-                                    onBlur={(e) => {console.log(e)}} //Optional.[Func].Default: none. In order to validate the value on blur, you MUST provide a function, even if it is an empty function. Missing this, the validation on blur will not work.
-                                    onFocus={(e) => {console.log(e)}} //Optional.[Func].Default: none.
+                                    }}
+                                    onBlur={(e) => {console.log(e)}}
+                                    onFocus={(e) => {console.log(e)}}
                                     validationOption={{
-                                        name: 'Name', //Optional.[String].Default: "". To display in the Error message. i.e Please enter your ${name}.
-                                        check: true, //Optional.[Bool].Default: true. To determin if you need to validate.
-                                        required: true, //Optional.[Bool].Default: true. To determin if it is a required field.
-                                        min: 5, //Optional.[Number].Default: 0. Validation of min length when validationOption['type'] is string, min amount when validationOption['type'] is number.
-                                        max: 50, //Optional.[Number].Default: 0. Validation of max length when validationOption['type'] is string, max amount when validationOption['type'] is number.
+                                        name: 'Name',
+                                        check: true,
+                                        required: true, 
+                                        min: 5,
+                                        max: 50
                                     }}
                                 />
                                 </div>

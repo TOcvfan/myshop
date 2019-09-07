@@ -4,8 +4,26 @@ import { Textarea, Textbox } from 'react-inputs-validation';
 import Select from 'react-select';
 import { HEAR_LIST } from '../lists';
 import { YES_NO } from '../yesno';
-import { Form, Radio } from 'semantic-ui-react'
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
+ 
+const PollOption = ({ selected, onChange }) => {
+    return (
+        <div>
+        {YES_NO.map((choice, index) => (
+            <div key={index}>
+                <label className="pollOption">
+                    <input type="radio"
+                        name="vote"
+                        value={choice.choice}
+                        checked={selected === choice.choice}
+                        onChange={onChange} />
+                    {choice.choice}
+                </label>
+            </div>
+        ))}
+      </div>
+    );
+};
 
 class Mail extends React.Component {
     constructor(props){
@@ -21,34 +39,12 @@ class Mail extends React.Component {
                 description: '',
                 size: this.props.size,
                 HEAR_LIST,
-                YES_NO
+                YES_NO,
+                selectedOption: ''
                 
             }
             this.submitted = false;
     }
-
-    /*renderError({error, touched}) {
-        if(touched && error){
-            return (
-                <div className="ui error message">
-                    <div className="header">{error}</div>
-                </div>
-            );
-        }
-    }
-    renderInput = ({input, label, meta}) => {
-        const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
-        return (
-            <div className={className}>
-                <label>{label}</label>
-                <input 
-                    {...input} 
-                    autoComplete="off"
-                />
-                {this.renderError(meta)}
-            </div>
-        );
-    }*/
 
     onSubmit = formValues => {
         this.props.onSubmit(formValues);
@@ -58,12 +54,22 @@ class Mail extends React.Component {
         console.log(value.label);
         this.setState({
             selectedValue: value.label
-        });
-        
+        }); 
     }
+
     handleYesNoChange(choise){
         console.log(choise.choice);
-        this.setState({selectedanswer: choise.id});
+        this.setState({selectedanswer: choise.choice});
+    }
+
+    handleClick() {
+        console.log('submitted option', this.state.selectedOption);
+    }
+    
+    handleOnChange(e) {
+        console.log('selected option', e.target.value);
+        console.log('selected option', e.target.name);
+        this.setState({ [e.target.name]: e.target.value});
     }
     
     render(){
@@ -91,10 +97,9 @@ class Mail extends React.Component {
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
                                         this.setState({ name });
-                                        console.log(e);
                                     }}
-                                    onBlur={(e) => {console.log(e)}} 
-                                    onFocus={(e) => {console.log(e)}} 
+                                    onBlur={(e) => {}} 
+                                    onFocus={(e) => {}} 
                                     validationOption={{
                                         name: 'Name', 
                                         check: true, 
@@ -105,24 +110,19 @@ class Mail extends React.Component {
                                 />
 							</div>
                             <div>
-                                <div>
-                                    {YES_NO.map((answers, id) => {
-                                        return (
-                                            <Form.Field key={id}>
-                                                <Radio
-                                                    label={YES_NO[id].choice}
-                                                    name='radioGroup'
-                                                    value={YES_NO[id].choice}
-                                                    checked={this.state.value === "yes"}
-                                                    onChange={this.handleYesNoChange}
-                                                    selectedanswer={this.props.choice}
-                                                />
-                                            </Form.Field> 
-                                            );
-                                    })}
-                                        
+                                <div className="poll">
+                                    <PollOption
+                                        options={this.props.choices}
+                                        onChange={(e) => this.handleOnChange(e)}
+                                        selected={this.state.selectedOption} />
                                 </div>
                             </div>
+                            <div className="poll">
+                                    <PollOption
+                                        options={this.props.choices}
+                                        onChange={(e) => this.handleOnChange(e)}
+                                        selected={this.state.selectedOption} />
+                                </div>
                             <div>
                             <label htmlFor="" className="">Where did hear about this page</label>
                             <Select 
@@ -144,10 +144,9 @@ class Mail extends React.Component {
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(email, e) => {
                                         this.setState({ email });
-                                        console.log(e);
                                     }}
-                                    onBlur={(e) => {console.log(e)}}
-                                    onFocus={(e) => {console.log(e)}}
+                                    onBlur={(e) => {}}
+                                    onFocus={(e) => {}}
                                     validationOption={{
                                         min: 5,
                                         max: 50,
@@ -174,9 +173,8 @@ class Mail extends React.Component {
                                     placeholder="Place your description here"
                                     onChange={(description, e) => {
                                         this.setState({ description });
-                                        console.log(e);
                                     }}
-                                    onBlur={(e) => {console.log(e)}}
+                                    onBlur={(e) => {}}
                                     validationOption={{
                                         name: 'Description',
                                         check: true,
@@ -199,10 +197,9 @@ class Mail extends React.Component {
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
                                         this.setState({ name });
-                                        console.log(e);
                                     }}
-                                    onBlur={(e) => {console.log(e)}}
-                                    onFocus={(e) => {console.log(e)}}
+                                    onBlur={(e) => {}}
+                                    onFocus={(e) => {}}
                                     validationOption={{
                                         name: 'Name',
                                         check: true,

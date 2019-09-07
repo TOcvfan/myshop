@@ -34,9 +34,19 @@
     color: cornflowerblue;
     font-size: 100%;
     background-color: white;
-  }
+}
 
 #rcorners2:hover {
     color: white;
     background-color: cornflowerblue;
-  }
+}
+
+.pollOption{
+    border-radius: 25px;
+    border: 2px solid cornflowerblue;
+}
+
+.pollOption:hover{
+    color: white;
+    background-color: cornflowerblue;
+}

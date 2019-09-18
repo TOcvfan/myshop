@@ -13,12 +13,12 @@ class Size extends React.Component {
     render(){
         const {size, description} = this.props;
         return(
-            <div className="containerself">
+            <div>
                 <div className="margin">
                     <div >
-                    <Link to={`/contact/${size}`} 
-                        className="containerself" 
+                    <Link to={`/itsmurf/contact/${size}`}  
                         id="rcorners2" 
+                        className="containerself" 
                     >
                         Choose this if you want a 
                         <br/> {size}

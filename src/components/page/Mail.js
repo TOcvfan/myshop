@@ -1,24 +1,28 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
 import { Textarea, Textbox } from 'react-inputs-validation';
-import Select from 'react-select';
+//import Select from 'react-select';
 import { HEAR_LIST } from '../lists';
 import { YES_NO } from '../yesno';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
+import history from '../../history';
  
-const PollOption = ({ selected, onChange }) => {
+const PollOption = ({ onChange }) => {
     return (
         <div>
-        {YES_NO.map((choice, index) => (
-            <div key={index}>
-                <label className="pollOption">
-                    <input type="radio"
-                        name="vote"
-                        value={choice.choice}
-                        checked={selected === choice.choice}
-                        onChange={onChange} />
-                    {choice.choice}
+        {YES_NO.map((choice, id) => (
+            <div key={id}>
+            <label>{YES_NO[id].question}</label>
+            {choice.choice.map((choices, i) =>(
+                <label className="containerradio" key={i}>
+                    <input type='radio'
+                        name={YES_NO[id].name}
+                        value={choice.choice[i].text}
+                        onChange={onChange}/>
+                    <span className="checkmark"></span>
+                    {choice.choice[i].text}
                 </label>
+                ))}
             </div>
         ))}
       </div>
@@ -29,11 +33,17 @@ class Mail extends React.Component {
     constructor(props){
         super(props);
         this.handleHearChange = this.handleHearChange.bind(this);
-        this.handleYesNoChange = this.handleYesNoChange.bind(this);
         this.state = {
+                validate: false,
                 id: '',
                 name: '',
                 label: '',
+                selectedValue: null,
+                DoYouWantMoreLanguagesThanOne: '',
+                WhatLanguageDoYouWantYourWebPageToBeIn: '',
+                WhatIsItFor: '',
+                HowMuchThoughtHaveYouGivenToTheDesign: '',
+                DomainPackageSize: '',
                 choice: '',
                 email: '',
                 description: '',
@@ -56,32 +66,72 @@ class Mail extends React.Component {
             selectedValue: value.label
         }); 
     }
-
-    handleYesNoChange(choise){
-        console.log(choise.choice);
-        this.setState({selectedanswer: choise.choice});
-    }
-
-    handleClick() {
-        console.log('submitted option', this.state.selectedOption);
-    }
+    
     
     handleOnChange(e) {
-        console.log('selected option', e.target.value);
-        console.log('selected option', e.target.name);
+        
         this.setState({ [e.target.name]: e.target.value});
+    }
+
+    onSubmitSignIn = (event) => {
+        event.preventDefault();
+        const {
+            hasNameError,
+            hasDescriptionError,
+            hasEmailError,
+            hasSizeError,
+          } = this.state;
+          if (!hasNameError && !hasDescriptionError && !hasEmailError && !hasSizeError) {
+            
+            this.setState({ validate: true })
+			fetch('https://nameless-ocean-57332.herokuapp.com/contact', {
+				method: 'post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					name: this.state.name,
+					email: this.state.email,
+					DoYouWantMoreLanguagesThanOne: this.state.DoYouWantMoreLanguagesThanOne,
+					WhatLanguageDoYouWantYourWebPageToBeIn: this.state.WhatLanguageDoYouWantYourWebPageToBeIn,
+					WhatIsItFor: this.state.WhatIsItFor,
+                    HowMuchThoughtHaveYouGivenToTheDesign: this.state.HowMuchThoughtHaveYouGivenToTheDesign,
+                    DomainPackageSize: this.state.DomainPackageSize,
+                    description: this.state.description,
+                    size: this.state.size,
+                    selectedValue: this.state.label                    	
+				})
+			})
+            .then((response) => (response.json()))
+            console.log('All validated!');
+            history.push('/itsmurf')
+        }
+    }
+    
+    validateForm(e) {
+        e.preventDefault();
+        
+        const {
+          hasNameError,
+          hasDescriptionError,
+          hasEmailError,
+          hasSizeError,
+        } = this.state;
+        if (!hasNameError && !hasDescriptionError && !hasEmailError && !hasSizeError) {
+          console.log('All validated!');
+          this.setState({ validate: true })
+          
+        }
     }
     
     render(){
         
         return (
             <div className="ui container">
-                <article className="container">
+                <article className="ui container">
 			<div className="">
 				<header className="">
-					<h1 className="container">Fill out form</h1>
+					<h1 className="ui container">Fill out the form</h1>
 					</header>
-					<form className="form-type-material">
+					<form className="form-type-material" onSubmit={this.onSubmitSignIn}>
 						<div id="register-form" action="" className="">
 							<div className="">
 								<label htmlFor="" className="">Name of Contact person</label>
@@ -109,6 +159,7 @@ class Mail extends React.Component {
                                     }}
                                 />
 							</div>
+                            <br/>
                             <div>
                                 <div className="poll">
                                     <PollOption
@@ -117,20 +168,18 @@ class Mail extends React.Component {
                                         selected={this.state.selectedOption} />
                                 </div>
                             </div>
-                            <div className="poll">
-                                    <PollOption
-                                        options={this.props.choices}
-                                        onChange={(e) => this.handleOnChange(e)}
-                                        selected={this.state.selectedOption} />
-                                </div>
+                            <br/> 
                             <div>
-                            <label htmlFor="" className="">Where did hear about this page</label>
-                            <Select 
-                                options={HEAR_LIST} 
-                                selectedValue={this.state.selectedValue} 
-                                onChange={this.handleHearChange} 
-                            />                            
-                            </div>
+                                {/*<label htmlFor="" className="">Where did hear about this page</label>
+                                <Select 
+                                    name="selectedValue"
+                                    options={HEAR_LIST} 
+                                    value={this.state.selectedValue}
+                                    
+                                    onChange={this.handleOnChange} 
+                                />*/}                            
+                                </div>
+                            <br/>
 							<div className="">
 								<label htmlFor="" className="">Email</label>
 								<Textbox
@@ -141,7 +190,7 @@ class Mail extends React.Component {
                                     disabled={false}
                                     placeholder="Place your email here"
                                     validationCallback={res =>
-                                        this.setState({ hasNameError: res, validate: false })}
+                                        this.setState({ hasEmailError: res, validate: false })}
                                     onChange={(email, e) => {
                                         this.setState({ email });
                                     }}
@@ -161,10 +210,10 @@ class Mail extends React.Component {
                                             return 'is not a valid email address';
                                           }
                                         }
-    
                                     }}
                                 />
 							</div>
+                            <br/>
 							<div className="">
 								<label htmlFor="" className="">Description</label>
 								<Textarea
@@ -182,6 +231,7 @@ class Mail extends React.Component {
                                     }}
                                 />	
 							</div>
+                            <br/>
                             <div>
                                 <label>Size</label>
                                 <Textbox
@@ -194,7 +244,7 @@ class Mail extends React.Component {
                                     value={this.state.size}
                                     disabled={true}
                                     validationCallback={res =>
-                                        this.setState({ hasNameError: res, validate: false })}
+                                        this.setState({ hasSizeError: res, validate: false })}
                                     onChange={(name, e) => {
                                         this.setState({ name });
                                     }}
@@ -209,13 +259,16 @@ class Mail extends React.Component {
                                     }}
                                 />
                                 </div>
+                                <br/>
 							<div className="">
-								<button 
+								
+                                <button 
 									type="submit" 
 									value="Send" 
-									onClick={this.onSubmitSignIn} 
-									className="">Send</button>
+                                    //onClick={this.validate} 
+                                    className="">Send</button>
 							</div>
+                            <br/>
 						</div>
 						</form>
 					</div>

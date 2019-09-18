@@ -1,3 +1,39 @@
+body{
+    background-image: linear-gradient(to right bottom, #e1418e, #d15dba, #b479dd, #8b91f4, #5ba6fe, #33b6ff, #00c4ff, #00d0fa, #00def3, #00ebdf, #00f4be, #5ffb95);
+}
+
+p {
+    font-size: 24px;
+    color: white;
+}
+
+#domainpack {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+#domainpack td, #domainpack th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+  
+#domainpack tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+  
+#domainpack tr:hover {
+    background-color: #ddd;
+}
+  
+#domainpack th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: cornflowerblue;
+    color: white;
+}
+
 #ligthbluebkg {
     background-color: cornflowerblue;
 }
@@ -7,28 +43,31 @@
     
 }
 .containerself{
-    
     justify-content: center;
     align-items: center;
     text-align: center;
-    
-    display: inline-block;
+    display: flex;
 }
+
 .textbox{
-    width: 300px;
-    
+    width: 275px;   
+}
+
+.newcontainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .margin{
-    margin-left: 20px;
     margin-right: 20px;
-    
 }
 
 #rcorners2 {
     border-radius: 25px;
     border: 2px solid cornflowerblue;
-    width: 250px;
+    width: 275px;
     font-weight: bold;
     height: 150px; 
     color: cornflowerblue;
@@ -46,7 +85,87 @@
     border: 2px solid cornflowerblue;
 }
 
-.pollOption:hover{
+.pollOption:hover::after{
     color: white;
     background-color: cornflowerblue;
+}
+
+.containerradio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.containerradio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+  
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.containerradio:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+  
+.containerradio input:checked ~ .checkmark {
+    background-color: cornflowerblue;
+}
+  
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+.containerradio input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.containerradio .checkmark:after {
+       top: 9px;
+      left: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+}
+
+label {
+    font-size: 24px;
+    color: white;
+}
+
+form button{
+    width: 100%;
+    border-radius: 25px;
+    border: 2px solid cornflowerblue;
+    font-weight: bold;
+    color: cornflowerblue;
+    font-size: 24px;
+    background-color: white;
+}
+
+form button:hover{
+    color: white;
+    background-color: cornflowerblue;
+}
+
+#headerLink {
+    font-weight: bold;
+    color: white;
 }

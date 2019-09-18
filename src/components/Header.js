@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 const Header = () => {
     return (
         <div className="ui secondary pointing menu" id="ligthbluebkg">
-            <Link to="/" className="item">
+            <Link to="/itsmurf" className="item" id="headerLink">
                 It Smurf
             </Link>
             <div className="right pointing menu">
-                <Link to="/contact" className="item">
+                <Link to="/itsmurf/contact/none" className="item" id="headerLink">
                     Contact
                 </Link>
-                <Link to="/examples" className="item">
+                <Link to="/itsmurf/examples" className="item" id="headerLink">
                     Examples
                 </Link>
                 {/*<GoogleAuth />*/}

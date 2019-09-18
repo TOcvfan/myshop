@@ -23,10 +23,10 @@ const App = () => {
         <div>
           <Header />
             <Switch>
-              <Route path="/" exact component={StartPage} />
-              <Route path="/contact/:size" exact render={(props) => contactRoute(props)} />
-              <Route path="/contact" exact render={(props) => contactRoute(props)} />
-              <Route path="/examples" exact component={Examples} />
+              <Route path="/itsmurf" exact component={StartPage} />
+              <Route path="/itsmurf/contact/:size" exact render={(props) => contactRoute(props)} />
+              <Route path="/itsmurf/contact" exact render={(props) => contactRoute(props)} />
+              <Route path="/itsmurf/examples" exact component={Examples} />
             </Switch>
         </div>
       </Router>

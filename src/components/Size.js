@@ -16,7 +16,7 @@ class Size extends React.Component {
             <div>
                 <div className="margin">
                     <div >
-                    <Link to={`/itsmurf/contact/${size}`}  
+                    <Link to={`/contact/${size}`}  
                         id="rcorners2" 
                         className="containerself" 
                     >

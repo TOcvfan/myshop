@@ -1,7 +1,7 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
+import Select from 'react-select';
 import { Textarea, Textbox } from 'react-inputs-validation';
-//import Select from 'react-select';
 import { HEAR_LIST } from '../lists';
 import { YES_NO } from '../yesno';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
@@ -28,6 +28,21 @@ const PollOption = ({ onChange }) => {
       </div>
     );
 };
+/*const array = HEAR_LIST.map((heard, id) => (
+                <div key={id}>
+                    <option>{HEAR_LIST[id].label}</option>
+                </div>
+            ))
+
+const Selecter = ({ onChange }) => {
+    return (
+        <div>
+            <select onChange={onChange}>
+            {array}
+            </select>
+        </div>
+    )
+}*/
 
 class Mail extends React.Component {
     constructor(props){
@@ -38,7 +53,7 @@ class Mail extends React.Component {
                 id: '',
                 name: '',
                 label: '',
-                selectedValue: null,
+                selectedValue: '',
                 DoYouWantMoreLanguagesThanOne: '',
                 WhatLanguageDoYouWantYourWebPageToBeIn: '',
                 WhatIsItFor: '',
@@ -60,10 +75,10 @@ class Mail extends React.Component {
         this.props.onSubmit(formValues);
     }
 
-    handleHearChange(value){
-        console.log(value.label);
+    handleHearChange = selectedValue =>{
+        console.log(selectedValue.label);
         this.setState({
-            selectedValue: value.label
+            selectedValue: selectedValue.label
         }); 
     }
     
@@ -97,12 +112,13 @@ class Mail extends React.Component {
                     DomainPackageSize: this.state.DomainPackageSize,
                     description: this.state.description,
                     size: this.state.size,
-                    selectedValue: this.state.label                    	
+                    selectedValue: this.state.selectedValue                    	
 				})
 			})
             .then((response) => (response.json()))
+            .catch(error => console.log(error))
             console.log('All validated!');
-            history.push('/itsmurf')
+            history.push('/')
         }
     }
     
@@ -170,15 +186,14 @@ class Mail extends React.Component {
                             </div>
                             <br/> 
                             <div>
-                                {/*<label htmlFor="" className="">Where did hear about this page</label>
+                                <label htmlFor="" className="">Where did hear about this page</label>
                                 <Select 
-                                    name="selectedValue"
                                     options={HEAR_LIST} 
                                     value={this.state.selectedValue}
-                                    
-                                    onChange={this.handleOnChange} 
-                                />*/}                            
-                                </div>
+                                    name="select"
+                                    onChange={(e) => this.handleHearChange(e)} 
+                                />                           
+                            </div>
                             <br/>
 							<div className="">
 								<label htmlFor="" className="">Email</label>

@@ -1,22 +1,22 @@
 export const HEAR_LIST = [
     {
-        value: 1,
+        id: 1,
         label: 'Google search'
     },
     {
-        value: 2,
+        id: 2,
         label: 'From a friend'
     },
     {
-        value: 3,
+        id: 3,
         label: 'Facebook'
     },
     {
-        value: 4,
+        id: 4,
         label: 'Instagram'
     },
     {
-        value: 5,
+        id: 5,
         label: 'Other'
     }
 ];

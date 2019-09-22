@@ -53,7 +53,7 @@ class Mail extends React.Component {
                 id: '',
                 name: '',
                 label: '',
-                selectedValue: '',
+                selectedValue: 'Select...',
                 DoYouWantMoreLanguagesThanOne: '',
                 WhatLanguageDoYouWantYourWebPageToBeIn: '',
                 WhatIsItFor: '',
@@ -75,10 +75,11 @@ class Mail extends React.Component {
         this.props.onSubmit(formValues);
     }
 
-    handleHearChange = selectedValue =>{
+    handleHearChange = (selectedValue) =>{
         console.log(selectedValue.label);
         this.setState({
-            selectedValue: selectedValue.label
+            selectedValue: selectedValue.label,
+            
         }); 
     }
     
@@ -191,7 +192,8 @@ class Mail extends React.Component {
                                     options={HEAR_LIST} 
                                     value={this.state.selectedValue}
                                     name="select"
-                                    onChange={(e) => this.handleHearChange(e)} 
+                                    onChange={(value) => this.handleHearChange(value)}
+                                    placeholder={this.state.selectedValue}
                                 />                           
                             </div>
                             <br/>

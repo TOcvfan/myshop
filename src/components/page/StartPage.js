@@ -1,6 +1,7 @@
 import React from 'react';
 import {PRODUCTS} from '../Products';
 import Size from '../Size';
+import {descriptionEng1, descriptionEng2} from './StartPageTxt';
 
 class StartPage extends React.Component{
     constructor(){
@@ -13,8 +14,8 @@ class StartPage extends React.Component{
         return (
             <div>
                 <h3 style={{color: 'White'}}>Start Page</h3>
-                <p>Do you need a web-page, maybe a web-shop, a blog, a page where you can show your youtube videos or just a page with a login or perhaps page showing who you are</p>
-                <p>then leave a message about your thoughts/ideas and I will get back to you within 24 hours</p>
+                <p>{descriptionEng1}</p>
+                <p>{descriptionEng2}</p>
                 <div className="newcontainer">
                     {PRODUCTS.map((sizes, id) => {
                         return <Size key={id} size={PRODUCTS[id].size} description={PRODUCTS[id].description} />

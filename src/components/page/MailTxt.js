@@ -1,0 +1,14 @@
+export const placeholderNameEng = 'Place your name here';
+export const labelNameEng = 'Name of Contact person';
+export const placeholderEmailEng = 'Place your Email here';
+export const placeholderDescriptionEng = 'Place your description here';
+export const labelDescriptionEng = 'Description';
+export const labelHearEng = 'Where did hear about this page';
+export const labelSizeEng = 'Size';
+export const placeholderNameDK = 'Skriv dit navn her';
+export const labelNameDK = 'Navn på kontaktperson';
+export const placeholderEmailDK = 'Skriv din mail her';
+export const placeholderDescriptionDK = 'Skriv en beskrivelse her';
+export const labelDescriptionDK = 'Beskrivelse';
+export const labelHearDK = 'Hvor har du hørt om denne side';
+export const labelSizeDK = 'Pakke Størrelse';

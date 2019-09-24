@@ -6,6 +6,15 @@ import { HEAR_LIST } from '../lists';
 import { YES_NO } from '../yesno';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import history from '../../history';
+import {
+        placeholderNameEng, 
+        placeholderEmailEng,
+        labelNameEng,
+        placeholderDescriptionEng,
+        labelDescriptionEng,
+        labelHearEng,
+        labelSizeEng
+    } from './MailTxt';
  
 const PollOption = ({ onChange }) => {
     return (
@@ -28,21 +37,6 @@ const PollOption = ({ onChange }) => {
       </div>
     );
 };
-/*const array = HEAR_LIST.map((heard, id) => (
-                <div key={id}>
-                    <option>{HEAR_LIST[id].label}</option>
-                </div>
-            ))
-
-const Selecter = ({ onChange }) => {
-    return (
-        <div>
-            <select onChange={onChange}>
-            {array}
-            </select>
-        </div>
-    )
-}*/
 
 class Mail extends React.Component {
     constructor(props){
@@ -151,7 +145,7 @@ class Mail extends React.Component {
 					<form className="form-type-material" onSubmit={this.onSubmitSignIn}>
 						<div id="register-form" action="" className="">
 							<div className="">
-								<label htmlFor="" className="">Name of Contact person</label>
+								<label htmlFor="" className="">{labelNameEng}</label>
 								<Textbox
                                     tabIndex="1" 
                                     id={'Name'} 
@@ -159,7 +153,7 @@ class Mail extends React.Component {
                                     type="text"
                                     disabled={false}
                                     maxLength={50}
-                                    placeholder="Place your name here"
+                                    placeholder={placeholderNameEng}
                                     validationCallback={res =>
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
@@ -187,7 +181,7 @@ class Mail extends React.Component {
                             </div>
                             <br/> 
                             <div>
-                                <label htmlFor="" className="">Where did hear about this page</label>
+                                <label htmlFor="" className="">{labelHearEng}</label>
                                 <Select 
                                     options={HEAR_LIST} 
                                     value={this.state.selectedValue}
@@ -205,7 +199,7 @@ class Mail extends React.Component {
                                     name="Email"
                                     type="text"
                                     disabled={false}
-                                    placeholder="Place your email here"
+                                    placeholder={placeholderEmailEng}
                                     validationCallback={res =>
                                         this.setState({ hasEmailError: res, validate: false })}
                                     onChange={(email, e) => {
@@ -232,11 +226,11 @@ class Mail extends React.Component {
 							</div>
                             <br/>
 							<div className="">
-								<label htmlFor="" className="">Description</label>
+								<label htmlFor="" className="">{labelDescriptionEng}</label>
 								<Textarea
                                     id="description"
                                     name="description"
-                                    placeholder="Place your description here"
+                                    placeholder={placeholderDescriptionEng}
                                     onChange={(description, e) => {
                                         this.setState({ description });
                                     }}
@@ -250,7 +244,7 @@ class Mail extends React.Component {
 							</div>
                             <br/>
                             <div>
-                                <label>Size</label>
+                                <label>{labelSizeEng}</label>
                                 <Textbox
                                     tabIndex="1" 
                                     id={'Size'}

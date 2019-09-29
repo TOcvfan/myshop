@@ -56,3 +56,61 @@ export const YES_NO = [
     },
     
 ];
+export const YES_NO_DK = [
+    {
+        id: 1,
+        name: 'DoYouWantMoreLanguagesThanOne',
+        question: 'Vil du have mere end et sprog?',
+        choice: 
+        [
+            {text: 'Ja'},
+            {text: 'Nej'}
+        ]
+    },
+    {
+        id: 2,
+        name: 'WhatLanguageDoYouWantYourWebPageToBeIn',
+        question: 'Hvilke sprog vil du have din hjemmeside på?',
+        choice: 
+        [
+            {text: 'English'},
+            {text: 'Dansk'},
+            {text: 'Begge'},
+            {text: 'Andet'}
+        ]
+    },
+    {
+        id: 3,
+        name: 'WhatIsItFor',
+        question: 'Hvad er det til?',
+        choice: 
+        [
+            {text: 'Personlig brug'},
+            {text: 'Forretnings brug'}
+        ]
+    },
+    {
+        id: 4,
+        name: 'HowMuchThoughtHaveYouGivenToTheDesign',
+        question: 'Hvor meget har du tænkt over designet?',
+        choice: 
+        [
+            {text: 'Intet'},
+            {text: 'Noget'},
+            {text: 'Alt'}
+        ]
+    },
+    {
+        id: 5,
+        name: 'DomainPackageSize',
+        question: 'Hvilken Domæne (www.example.com) pakke ønsker du? se forsiden for mere',
+        choice: 
+        [
+            {text: 'ingen'},
+            {text: 'Bronze'},
+            {text: 'Sølv'},
+            {text: 'Guld'}
+        ]
+    },
+    
+];

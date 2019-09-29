@@ -1,5 +1,23 @@
+@font-face{
+    font-family: 'smurfFont';
+    src: url('fonts/burnstown_dam.ttf');
+}
+
+h1 {
+    font-family: 'smurfFont';
+    font-size: 50pt;
+}
+
+img {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 body{
     background-image: linear-gradient(to right bottom, #e1418e, #d15dba, #b479dd, #8b91f4, #5ba6fe, #33b6ff, #00c4ff, #00d0fa, #00def3, #00ebdf, #00f4be, #5ffb95);
+    background-attachment: fixed;
 }
 
 p {

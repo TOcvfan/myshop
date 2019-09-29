@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LanguageContext from '../contexts/LanguageContext';
 
 class Size extends React.Component {
+    static contextType = LanguageContext;
     constructor(props){
         super(props);
         this.state = {
@@ -12,6 +14,8 @@ class Size extends React.Component {
 
     render(){
         const {size, description} = this.props;
+        const choose =  this.context === 'english' ? 'Choose this if you want a' : 'Vælg denne hvis du vil ha en';
+        const pack =  this.context === 'english' ? 'package' : 'pakke';
         return(
             <div>
                 <div className="margin">
@@ -20,9 +24,9 @@ class Size extends React.Component {
                         id="rcorners2" 
                         className="containerself" 
                     >
-                        Choose this if you want a 
+                        {choose} 
                         <br/> {size}
-                        <br/>package
+                        <br/>{pack}
                     </Link>
                     </div>
                 </div>

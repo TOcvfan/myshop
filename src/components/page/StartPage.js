@@ -1,67 +1,33 @@
 import React from 'react';
-import {PRODUCTS} from '../Products';
+import {PRODUCTS, PRODUCTS_DK} from '../Products';
 import Size from '../Size';
-import {descriptionEng1, descriptionEng2} from './StartPageTxt';
+import {descriptionEng1, descriptionEng2, descriptionDK1, descriptionDK2} from './StartPageTxt';
+import Table from './Table';
+import LanguageContext from '../../contexts/LanguageContext';
 
 class StartPage extends React.Component{
+    static contextType = LanguageContext;
     constructor(){
         super();
         this.state = {PRODUCTS}
     }
-    
 
     render() {
+        const description1 = this.context === 'english' ? descriptionEng1 : descriptionDK1;
+        const description2 = this.context === 'english' ? descriptionEng2 : descriptionDK2;
+        const products = this.context === 'english' ? PRODUCTS : PRODUCTS_DK;
+        const head = this.context === 'english' ? 'IT-Smurf Homepages' : 'IT-Smølf Hjemmesider'
         return (
             <div>
-                <h3 style={{color: 'White'}}>Start Page</h3>
-                <p>{descriptionEng1}</p>
-                <p>{descriptionEng2}</p>
+                <h1 style={{color: 'White', textAlign: 'center'}}>{head}</h1>
+                <p>{description1}</p>
+                <p>{description2}</p>
                 <div className="newcontainer">
-                    {PRODUCTS.map((sizes, id) => {
-                        return <Size key={id} size={PRODUCTS[id].size} description={PRODUCTS[id].description} />
+                    {products.map((sizes, id) => {
+                        return <Size key={id} size={products[id].size} description={products[id].description} />
                     })}
                 </div>
-                <table id="domainpack">
-                    <thead>
-                        <tr>
-                            <th>Domain packeges</th>
-                            <th>none</th>
-                            <th style={{backgroundColor: '#b08d57'}}>Bronze</th>
-                            <th style={{backgroundColor: '#aaa9ad'}}>Silver</th>
-                            <th style={{backgroundColor: '#d4af37'}}>Gold</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>own your domain</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                        </tr>
-                        <tr>
-                            <td>24 hour service</td>
-                            <td>no</td>
-                            <td>no</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                        </tr>
-                        <tr>
-                            <td>webhotel and mail</td>
-                            <td>your choice</td>
-                            <td>10 GB</td>
-                            <td>20 GB</td>
-                            <td>50 GB</td>
-                        </tr>
-                        <tr>
-                            <td>saftycertificate</td>
-                            <td>maybe</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                            <td>yes</td>
-                        </tr>    
-                    </tbody>
-                </table>
+                <Table />
             </div>
         );
     }

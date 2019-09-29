@@ -2,43 +2,32 @@ import React from 'react';
 import { reduxForm } from 'redux-form'
 import Select from 'react-select';
 import { Textarea, Textbox } from 'react-inputs-validation';
-import { HEAR_LIST } from '../lists';
-import { YES_NO } from '../yesno';
+import { HEAR_LIST, HEAR_LIST_DK} from '../listsEng';
+import { YES_NO, YES_NO_DK } from '../yesno';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import history from '../../history';
-import {
-        placeholderNameEng, 
-        placeholderEmailEng,
-        labelNameEng,
-        placeholderDescriptionEng,
-        labelDescriptionEng,
-        labelHearEng,
-        labelSizeEng
-    } from './MailTxt';
+import LanguageContext from '../../contexts/LanguageContext';
+import { labelHearDK,
+            placeholderNameDK,
+            labelNameDK,
+            placeholderEmailDK,
+            placeholderDescriptionDK,
+            labelDescriptionDK,
+            labelSizeDK,
+            labelheadDK
+        } from './MailTxtDK'
+import { placeholderNameEng,
+            labelNameEng,
+            placeholderEmailEng,
+            placeholderDescriptionEng,
+            labelDescriptionEng,
+            labelHearEng,
+            labelSizeEng,
+            labelheadEng
+        } from './MailTxt';
  
-const PollOption = ({ onChange }) => {
-    return (
-        <div>
-        {YES_NO.map((choice, id) => (
-            <div key={id}>
-            <label>{YES_NO[id].question}</label>
-            {choice.choice.map((choices, i) =>(
-                <label className="containerradio" key={i}>
-                    <input type='radio'
-                        name={YES_NO[id].name}
-                        value={choice.choice[i].text}
-                        onChange={onChange}/>
-                    <span className="checkmark"></span>
-                    {choice.choice[i].text}
-                </label>
-                ))}
-            </div>
-        ))}
-      </div>
-    );
-};
-
 class Mail extends React.Component {
+    static contextType = LanguageContext;
     constructor(props){
         super(props);
         this.handleHearChange = this.handleHearChange.bind(this);
@@ -134,18 +123,27 @@ class Mail extends React.Component {
     }
     
     render(){
-        
+        const question = this.context === 'english' ? YES_NO : YES_NO_DK;
+        const hearlist = this.context === 'english' ? HEAR_LIST : HEAR_LIST_DK;
+        const contactNamelabel = this.context === 'english' ? labelNameEng : labelNameDK;
+        const placeholderName = this.context === 'english' ? placeholderNameEng : placeholderNameDK;
+        const placeholderEmail = this.context === 'english' ? placeholderEmailEng : placeholderEmailDK;
+        const labelDescription = this.context === 'english' ? labelDescriptionEng : labelDescriptionDK;
+        const placeholderDescription = this.context === 'english' ? placeholderDescriptionEng : placeholderDescriptionDK;
+        const labelSize = this.context === 'english' ? labelSizeEng : labelSizeDK;
+        const labelhead = this.context === 'english' ? labelheadEng : labelheadDK;
+        const labelHear = this.context === 'english' ? labelHearEng : labelHearDK;
         return (
             <div className="ui container">
                 <article className="ui container">
 			<div className="">
 				<header className="">
-					<h1 className="ui container">Fill out the form</h1>
+					<h1 className="ui container" style={{color: 'White', textAlign: 'center'}}>{labelhead}</h1>
 					</header>
 					<form className="form-type-material" onSubmit={this.onSubmitSignIn}>
 						<div id="register-form" action="" className="">
 							<div className="">
-								<label htmlFor="" className="">{labelNameEng}</label>
+								<label htmlFor="" className="">{contactNamelabel}</label>
 								<Textbox
                                     tabIndex="1" 
                                     id={'Name'} 
@@ -153,7 +151,7 @@ class Mail extends React.Component {
                                     type="text"
                                     disabled={false}
                                     maxLength={50}
-                                    placeholder={placeholderNameEng}
+                                    placeholder={placeholderName}
                                     validationCallback={res =>
                                         this.setState({ hasNameError: res, validate: false })}
                                     onChange={(name, e) => {
@@ -172,18 +170,33 @@ class Mail extends React.Component {
 							</div>
                             <br/>
                             <div>
-                                <div className="poll">
-                                    <PollOption
-                                        options={this.props.choices}
-                                        onChange={(e) => this.handleOnChange(e)}
-                                        selected={this.state.selectedOption} />
+                                <div className="poll">                                        
+                                    <div>                               
+                                    {question.map((choice, id) => (
+                                        <div key={id}>
+                                        <label>{question[id].question}</label>
+                                        {choice.choice.map((choices, i) =>(
+                                            <label className="containerradio" key={i}>
+                                                <input type='radio'
+                                                    options={this.props.choices}
+                                                    name={question[id].name}
+                                                    value={choice.choice[i].text}
+                                                    onChange={(e) => this.handleOnChange(e)}
+                                                    selected={this.state.selectedOption}/>
+                                                <span className="checkmark"></span>
+                                                {choice.choice[i].text}
+                                            </label>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
                                 </div>
                             </div>
                             <br/> 
                             <div>
-                                <label htmlFor="" className="">{labelHearEng}</label>
-                                <Select 
-                                    options={HEAR_LIST} 
+                                <label htmlFor="" className="">{labelHear}</label>
+                                <Select
+                                    options={hearlist} 
                                     value={this.state.selectedValue}
                                     name="select"
                                     onChange={(value) => this.handleHearChange(value)}
@@ -199,7 +212,7 @@ class Mail extends React.Component {
                                     name="Email"
                                     type="text"
                                     disabled={false}
-                                    placeholder={placeholderEmailEng}
+                                    placeholder={placeholderEmail}
                                     validationCallback={res =>
                                         this.setState({ hasEmailError: res, validate: false })}
                                     onChange={(email, e) => {
@@ -226,11 +239,11 @@ class Mail extends React.Component {
 							</div>
                             <br/>
 							<div className="">
-								<label htmlFor="" className="">{labelDescriptionEng}</label>
+								<label htmlFor="" className="">{labelDescription}</label>
 								<Textarea
                                     id="description"
                                     name="description"
-                                    placeholder={placeholderDescriptionEng}
+                                    placeholder={placeholderDescription}
                                     onChange={(description, e) => {
                                         this.setState({ description });
                                     }}
@@ -244,7 +257,7 @@ class Mail extends React.Component {
 							</div>
                             <br/>
                             <div>
-                                <label>{labelSizeEng}</label>
+                                <label>{labelSize}</label>
                                 <Textbox
                                     tabIndex="1" 
                                     id={'Size'}

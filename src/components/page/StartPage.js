@@ -2,7 +2,7 @@ import React from 'react';
 import {PRODUCTS, PRODUCTS_DK} from '../Products';
 import Size from '../Size';
 import {descriptionEng1, descriptionEng2, descriptionDK1, descriptionDK2} from './StartPageTxt';
-import Table from './Table';
+import Table from './table';
 import LanguageContext from '../../contexts/LanguageContext';
 
 class StartPage extends React.Component{
